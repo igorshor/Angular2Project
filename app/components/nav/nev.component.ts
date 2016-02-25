@@ -1,22 +1,21 @@
 import {Component, Input} from 'angular2/core'
 
-interface INavViewModel{
-    testVar:string;
+interface INavigationViewModel {
+    categories:ICategoryData[]
 }
 
 @Component({
     selector: 'nav',
-    templateUrl: 'app/components/nav/nav.component.html'
+    templateUrl: 'app/components/nav/nav.component.html',
+    styleUrls: ['app/components/nav/nav.component.css']
 })
 
-export class NavComponent implements INavViewModel{
-    @Input() public vm:INavViewModel;
-    public testVar:string;
+export class NavComponent implements INavigationViewModel {
+    @Input() public vm:INavigationViewModel;
 
-    constructor(){
+    categories:ICategoryData[];
+
+    constructor() {
         this.vm = this;
-
-        this.testVar = 'testVar';
-        var fdfsf:moment.Moment = moment(new Date());
     }
 }
