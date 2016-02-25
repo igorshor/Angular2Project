@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
-import {HeaderComponent} from './header/header.component';
-import {NavComponent} from './nav/nev.component';
+import {HeaderComponent} from './components/header/header.component';
+import {NavComponent} from './components/nav/nev.component';
 
 @Component({
     selector: 'ng-auction',
