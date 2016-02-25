@@ -9,5 +9,4 @@ import {NavComponent} from './components/nav/nev.component';
 })
 
 export class AppComponent {
-
 }

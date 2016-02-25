@@ -17,5 +17,6 @@ export class NavComponent implements INavViewModel{
         this.vm = this;
 
         this.testVar = 'testVar';
+        var fdfsf:moment.Moment = moment(new Date());
     }
 }
