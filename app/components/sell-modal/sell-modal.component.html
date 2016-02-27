@@ -10,7 +10,8 @@
                 Add Items For Sale
             </div>
             <div class="modal-body sale-form">
-                <form class="form" name="sellForm">
+                {{vm.product | json}}
+                <form class="form" #sellForm="ngForm">
                     <div class="row">
                         <div class="col-sm-7 col-xs-12">
                             <div class="col-md-2 col-sm-12 col-xs-12">
@@ -138,7 +139,7 @@
             <div class="modal-footer sale-footer">
                 <button type="submit" class="btn btn-lg btn-base btn-base-small-color"
                         data-dismiss="modal" aria-label="Close" (click)="vm.addAndSaveBtn()"
-                        [disabled]="sellForm.$invalid">
+                        [disabled]="sellForm.form.valid">
                     save and Preview
                 </button>
             </div>

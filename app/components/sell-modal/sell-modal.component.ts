@@ -1,6 +1,7 @@
 import {Component, OnChanges, SimpleChange} from 'angular2/core'
 import {NetService, ICategoryData, IProductData} from "../../services/net.service";
 import {CategoriesService} from "../../services/categories.service";
+import {NgModel} from "angular2/common";
 
 interface ISellModalViewModel {
     product:IProductData;
@@ -18,6 +19,7 @@ interface IFutureDate {
     selector: 'sell-modal',
     templateUrl: 'app/components/sell-modal/sell-modal.component.html',
     styleUrls: ['app/components/sell-modal/sell-modal.component.less'],
+    directives:[NgModel],
     providers:[CategoriesService]
 })
 
@@ -26,6 +28,7 @@ export class SellModalComponent implements ISellModalViewModel, OnChanges {
     public product:IProductData;
     public futureDates:IFutureDate[];
     public categories:ICategoryData[];
+    public title:string;
 
     constructor(private categoriesService:CategoriesService, private  netService:NetService) {
         this.vm = this;
@@ -42,21 +45,7 @@ export class SellModalComponent implements ISellModalViewModel, OnChanges {
 
     ngOnChanges(changes:{[key: string]: SimpleChange}):any {
         for (var key in changes) {
-            if (changes.hasOwnProperty(key)) {
-                var change:SimpleChange = changes[key];
-
-                if (key === 'vm.selectedCategory') {
-                    if (change.isFirstChange()) {
-                        this.product.CategoryId = change.currentValue.id;
-                    }
-                }
-
-                if (key === 'vm.selectedFutureDate') {
-                    if (change.isFirstChange()) {
-                        this.product.EndTime = change.currentValue;
-                    }
-                }
-            }
+            console.log('key ' + key +' value ' + changes[key].currentValue)
         }
     }
 
@@ -77,11 +66,13 @@ export class SellModalComponent implements ISellModalViewModel, OnChanges {
             {futureDateString: '2 Months', futureDate: moment().add(2, 'months').toDate()},
             {futureDateString: '3 Months', futureDate: moment().add(3, 'months').toDate()},
             {futureDateString: '4 Months', futureDate: moment().add(4, 'months').toDate()}];
+
+        this.resetForm();
     }
 
     private resetForm() {
         var date:Date = moment().toDate();
-        var futureDate = this.selectedFutureDate ? this.selectedFutureDate.futureDate : date;
+        var futureDate = this.product && this.product.EndTime ? this.product.EndTime : date;
 
         this.product = {
             Title: '',
@@ -97,8 +88,8 @@ export class SellModalComponent implements ISellModalViewModel, OnChanges {
             CategoryId: 1,
         };
 
-        this.selectedCategory = this.categories[1];
-        this.selectedFutureDate = this.futureDates[6];
+        this.product.CategoryId = this.categories[1].Id;
+        this.product.EndTime = this.futureDates[6].futureDate;
     }
 
     addAndSaveBtn():void {
