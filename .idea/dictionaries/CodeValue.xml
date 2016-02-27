@@ -2,6 +2,9 @@
   <dictionary name="CodeValue">
     <words>
       <w>livereload</w>
+      <w>polyfills</w>
+      <w>rxjs</w>
+      <w>systemjs</w>
       <w>webserver</w>
     </words>
   </dictionary>

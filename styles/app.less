@@ -23,7 +23,125 @@ html, body {
   clear: both;
 }
 
+header {
+  height: 50px;
 
+  img {
+    margin-top: 7px;
+    margin-left: 15px;
+    float: left;
+  }
+
+  .user-info {
+    margin-top: 5px;
+    margin-right: 15px;
+    float: right;
+    font-family: Roboto-Regular, serif;
+    font-size: 12px;
+
+    span {
+      position: relative;
+      top: 2px;
+      margin-left: 20px;
+      vertical-align: top;
+    }
+  }
+}
+
+nav {
+  position: relative;
+  height: @category-tab-height;
+  box-shadow: 1px 0 1px rgba(0, 0, 0, 0.3);
+  font-family: Roboto-Regular, serif;
+  font-size: 12px;
+
+  .categories {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    width: 101%;
+
+    .category {
+      position: relative;
+      width: @category-tab-width-large;
+      float: left;
+      text-align: center;
+      border-right: 1px solid white;
+      box-sizing: content-box;
+
+      &:last-child {
+        border-right: none;
+      }
+
+      .category-hover-class {
+        color: white;
+        background-color: transparent;
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        .category-details {
+          .category-hover-class
+        }
+
+        .category-details {
+          img {
+            display: none;
+          }
+        }
+      }
+
+      .selected {
+        .category-details {
+          .category-hover-class
+        }
+
+        .category-details {
+          img {
+            display: none;
+          }
+        }
+      }
+
+      .image-position {
+        position: absolute;
+        top: 0;
+        left: 10px;
+      }
+
+      .category-details {
+        position: relative;
+        z-index: 1;
+        height: 39px;
+        width: 100%;
+        line-height: 39px;
+        background-color: white;
+
+        img {
+          .image-position
+        }
+      }
+
+      .category-hover {
+        position: absolute;
+        top: 6px;
+        left: 0;
+        width: 100%;
+        height: 39px;
+        opacity: 0.85;
+
+        img {
+          .image-position
+        }
+      }
+    }
+
+    :last-child {
+      border-right: none;
+    }
+  }
+}
 
 .color-block {
   width: 100%;

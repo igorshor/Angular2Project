@@ -1,5 +1,5 @@
 <ol class="categories">
-    <li class="category" *ngFor="#category of vm.categories; trackBy:category.Id">
-        <category category-id="{{::category.Id}}" category-name="{{::category.Name}}"></category>
+    <li class="category" *ngFor="#category of vm.categories">
+        <category [categoryId]="category.Id" [categoryName]="category.Name"></category>
     </li>
 </ol>

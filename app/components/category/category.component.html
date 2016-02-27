@@ -1,10 +1,10 @@
 <div [ngClass]='{selected:vm.categorySelected}' (click)="vm.onCategoryClick()">
     <div class="color-block color-{{vm.categoryNameLowerCase}}"></div>
     <div class="category-details">
-        <img [src]="styles/images/{{vm.categoryNameLowerCase}}.png" *ngIf="vm.categoryHaveImage">
+        <img src="styles/images/{{vm.categoryNameLowerCase}}.png" *ngIf="vm.categoryHaveImage">
         {{vm.categoryNameUpperCase}}
     </div>
     <div class="category-hover color-{{vm.categoryNameLowerCase}}">
-        <img [src]="styles/images/{{vm.categoryNameLowerCase}}_w.png" *ngIf="vm.categoryHaveImage">
+        <img src="styles/images/{{vm.categoryNameLowerCase}}_w.png" *ngIf="vm.categoryHaveImage">
     </div>
 </div>

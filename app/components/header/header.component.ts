@@ -1,4 +1,5 @@
 import {Component, Input} from 'angular2/core'
+import {UserService} from "../../services/user.service";
 
 interface IHeaderViewModel {
     user:string;
@@ -11,11 +12,12 @@ interface IHeaderViewModel {
 })
 
 export class HeaderComponent implements IHeaderViewModel{
-    @Input() public vm:IHeaderViewModel;
+    public vm:IHeaderViewModel;
     public user:string;
 
-    constructor(){
+    constructor(userService:UserService){
         this.vm = this;
+        this.vm.user = userService.userName;
     }
 
 }
