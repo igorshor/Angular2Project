@@ -18,6 +18,7 @@ interface IFutureDate {
     selector: 'sell-modal',
     templateUrl: 'app/components/sell-modal/sell-modal.component.html',
     styleUrls: ['app/components/sell-modal/sell-modal.component.less'],
+    providers:[CategoriesService]
 })
 
 export class SellModalComponent implements ISellModalViewModel, OnChanges {

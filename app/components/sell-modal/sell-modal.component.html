@@ -36,7 +36,7 @@
                                     <select class="form-control" id="category"
                                             [(ngModel)]="vm.product.CategoryId" required>
                                         <option *ngFor="#category of vm.categories; trackBy:Id"
-                                                [value]="category.Id">{{category.Name}}</option>
+                                                value="{{category.Id}}">{{category.Name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -125,12 +125,11 @@
                                 </label>
                             </div>
                             <div class="col-md-8 col-sm-12 col-xs-12">
-                                <select class="form-control" id="last"
-                                        ng-options="date.futureDateString for date in vm.futureDates track by date.futureDateString"
-                                        [(ngModel)]="vm.product.CategoryId" required>
-                                    <option *ngfor="#date of vm.futureDates; trackBy:futureDateString"
-                                            [value]="futureDate">{{date.futureDateString}}</option>
-                                </select>
+                                <!--<select class="form-control" id="last"-->
+                                        <!--[(ngModel)]="vm.product.EndTime" required>-->
+                                    <!--<option *ngfor="#date of vm.futureDates"-->
+                                            <!--value="{{date.futureDateString}}">{{date.futureDateString}}</option>-->
+                                <!--</select>-->
                             </div>
                         </div>
                     </div>
