@@ -2,7 +2,6 @@ import {Component, Input} from 'angular2/core'
 import {ICategoryData} from "../../services/net.service";
 import {CategoriesService} from "../../services/categories.service";
 import {CategoryComponent} from "../category/category.component";
-import {TestComponent} from "../test/test.component";
 
 interface INavigationViewModel {
     categories:ICategoryData[]

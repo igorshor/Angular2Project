@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from 'angular2/core'
 import {NgClass} from 'angular2/common'
+import {PubSubService} from "../../services/pubsub.service";
+import {PubsubEvents} from "../../services/pubsub.service";
 
 
 interface ICategoryViewModel {
@@ -26,8 +28,12 @@ export class CategoryComponent implements ICategoryViewModel, OnInit {
     public categoryHaveImage:boolean;
     public categorySelected:boolean;
 
-    constructor() {
+    constructor(private pubsubService:PubSubService) {
         this.vm = this;
+        pubsubService.subscribe(PubsubEvents.balbal,(event, id)=> {
+            this.categorySelected = id === this.categoryId
+            console.log('balbal')
+        });
     }
 
     ngOnInit():any {
@@ -43,6 +49,7 @@ export class CategoryComponent implements ICategoryViewModel, OnInit {
 
     public onCategoryClick():void {
         //this.$location.search({'categoryId': this.categoryId !== '0' ? this.categoryId : null});
+        this.pubsubService.publish(PubsubEvents.balbal, this.categoryId);
         //this.$rootScope.$emit('onCategorySelection', this.categoryId);
     }
 

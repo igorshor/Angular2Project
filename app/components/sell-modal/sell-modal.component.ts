@@ -1,7 +1,7 @@
-import {Component, OnChanges, SimpleChange} from 'angular2/core'
+import {Component} from 'angular2/core'
 import {NetService, ICategoryData, IProductData} from "../../services/net.service";
 import {CategoriesService} from "../../services/categories.service";
-import {NgModel} from "angular2/common";
+import {FORM_DIRECTIVES} from "angular2/common";
 
 interface ISellModalViewModel {
     product:IProductData;
@@ -19,11 +19,11 @@ interface IFutureDate {
     selector: 'sell-modal',
     templateUrl: 'app/components/sell-modal/sell-modal.component.html',
     styleUrls: ['app/components/sell-modal/sell-modal.component.less'],
-    directives:[NgModel],
-    providers:[CategoriesService]
+    providers:[CategoriesService],
+    directives: [FORM_DIRECTIVES]
 })
 
-export class SellModalComponent implements ISellModalViewModel, OnChanges {
+export class SellModalComponent implements ISellModalViewModel {
     public vm:ISellModalViewModel;
     public product:IProductData;
     public futureDates:IFutureDate[];
@@ -41,12 +41,6 @@ export class SellModalComponent implements ISellModalViewModel, OnChanges {
         //    })
         //})
 
-    }
-
-    ngOnChanges(changes:{[key: string]: SimpleChange}):any {
-        for (var key in changes) {
-            console.log('key ' + key +' value ' + changes[key].currentValue)
-        }
     }
 
     private initData() {
