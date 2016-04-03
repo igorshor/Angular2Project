@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from 'angular2/core'
-import {NgClass} from 'angular2/common'
 import {PubSubService} from "../../services/pubsub.service";
 import {PubsubEvents} from "../../services/pubsub.service";
 
@@ -30,9 +29,8 @@ export class CategoryComponent implements ICategoryViewModel, OnInit {
 
     constructor(private pubsubService:PubSubService) {
         this.vm = this;
-        pubsubService.subscribe(PubsubEvents.balbal,(event, id)=> {
-            this.categorySelected = id === this.categoryId
-            console.log('balbal')
+        pubsubService.subscribe(PubsubEvents.CategoryChanged,(args)=> {
+            this.categorySelected = args === this.categoryId;
         });
     }
 
@@ -49,8 +47,7 @@ export class CategoryComponent implements ICategoryViewModel, OnInit {
 
     public onCategoryClick():void {
         //this.$location.search({'categoryId': this.categoryId !== '0' ? this.categoryId : null});
-        this.pubsubService.publish(PubsubEvents.balbal, this.categoryId);
-        //this.$rootScope.$emit('onCategorySelection', this.categoryId);
+        this.pubsubService.publish(PubsubEvents.CategoryChanged, this.categoryId);
     }
 
 }
