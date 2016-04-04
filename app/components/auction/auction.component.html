@@ -1,0 +1,37 @@
+<div>
+    <div class="product-remove-box" *ngIf="vm.isUserAuction" (click)="vm.deleteAuctionBtn()">
+        X
+    </div>
+    <div data-role="button" data-toggle="modal" data-target="#bidModal" (click)="vm.openBidModal()">
+        <div class="product-price-box">
+            <div class="price">
+                ILS {{vm.highestBid | number:2}}
+            </div>
+            <div class="price-description">
+                {{vm.bidCount}}
+            </div>
+        </div>
+        <div class="product-top-block">
+            <img [src]="vm.auction.Picture1">
+        </div>
+        <div class="product-bottom-block">
+            <div class="product-info">
+                <div class="product-description" smart-ellipsis>
+                    {{::vm.auction.Description}}
+                </div>
+                <div class="seller-info">
+                    Seller:
+                    <a [href]="mailto:{{vm.auction.User.Email}}?Subject=SELL" target="_blank">
+                        {{::vm.auction.User.Name}}
+                        <img [src]="styles/images/email.png">
+                    </a>
+
+                    <div class="date">
+                        {{vm.timeLeft}} left
+                    </div>
+                </div>
+            </div>
+            <div class="color-block color-{{::vm.category}}"></div>
+        </div>
+    </div>
+</div>

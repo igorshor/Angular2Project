@@ -30,7 +30,7 @@ export class CategoryComponent implements ICategoryViewModel, OnInit {
     constructor(private pubsubService:PubSubService) {
         this.vm = this;
         pubsubService.subscribe(PubsubEvents.CategoryChanged,(args)=> {
-            this.categorySelected = args === this.categoryId;
+            this.categorySelected = args.data === this.categoryId;
         });
     }
 
@@ -47,7 +47,7 @@ export class CategoryComponent implements ICategoryViewModel, OnInit {
 
     public onCategoryClick():void {
         //this.$location.search({'categoryId': this.categoryId !== '0' ? this.categoryId : null});
-        this.pubsubService.publish(PubsubEvents.CategoryChanged, this.categoryId);
+        this.pubsubService.publish(PubsubEvents.CategoryChanged, {data:this.categoryId});
     }
 
 }

@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core'
-import {ICategoryData} from "./net.service";
+import {ICategoryData} from "../models/auction.model";
 
 export interface ICategoriesService {
     categoriesNames:string[];

@@ -10,7 +10,7 @@
                 Add Items For Sale
             </div>
             <div class="modal-body sale-form">
-                <form class="form" #sellForm="ngForm">
+                <form *ngIf="vm.active" class="form" #sellForm="ngForm">
                     <div class="row">
                         <div class="col-sm-7 col-xs-12">
                             <div class="col-md-2 col-sm-12 col-xs-12">

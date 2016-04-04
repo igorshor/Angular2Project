@@ -1,7 +1,8 @@
-import {Component} from 'angular2/core'
-import {NetService, ICategoryData, IProductData} from "../../services/net.service";
+import {Component, ElementRef} from 'angular2/core'
+import {ICategoryData, IProductData} from "../../models/auction.model";
 import {CategoriesService} from "../../services/categories.service";
 import {FORM_DIRECTIVES} from "angular2/common";
+import {IPubSubService, PubsubEvents} from "../../services/pubsub.service";
 
 interface ISellModalViewModel {
     product:IProductData;
@@ -18,8 +19,8 @@ interface IFutureDate {
 @Component({
     selector: 'sell-modal',
     templateUrl: 'app/components/sell-modal/sell-modal.component.html',
-    styleUrls: ['app/components/sell-modal/sell-modal.component.less'],
-    providers:[CategoriesService],
+    styleUrls: ['app/components/sell-modal/sell-modal.component.css'],
+    providers: [CategoriesService],
     directives: [FORM_DIRECTIVES]
 })
 
@@ -29,17 +30,23 @@ export class SellModalComponent implements ISellModalViewModel {
     public futureDates:IFutureDate[];
     public categories:ICategoryData[];
     public title:string;
+    public active:boolean;
 
-    constructor(private categoriesService:CategoriesService, private  netService:NetService) {
+    private formElement:JQuery;
+
+    constructor(private categoriesService:CategoriesService,
+                private netService:NetService,
+                private pubsubService:IPubSubService,
+                private elementRef:ElementRef) {
         this.vm = this;
+        this.active = true;
         this.initData();
+        this.formElement = $(elementRef);
 
-        //$element.on('show.bs.modal', ()=> {
-        //    $scope.$apply(()=> {
-        //        this.resetForm();
-        //        $scope.sellForm.$setPristine();
-        //    })
-        //})
+        this.formElement.on('show.bs.modal', ()=> {
+            this.active = false;
+            setTimeout(()=>this.active = true, 0);
+        })
 
     }
 
@@ -87,6 +94,7 @@ export class SellModalComponent implements ISellModalViewModel {
     }
 
     addAndSaveBtn():void {
+        this.pubsubService.publish(PubsubEvents.CategoryChanged);
         //this.netService.createAuction(this.product).then(()=> {
         //    this.$rootScope.$emit('onAuctionsChanged')
         //});

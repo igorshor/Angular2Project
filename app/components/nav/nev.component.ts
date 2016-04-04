@@ -1,5 +1,5 @@
 import {Component, Input} from 'angular2/core'
-import {ICategoryData} from "../../services/net.service";
+import {ICategoryData} from "../../models/auction.model";
 import {CategoriesService} from "../../services/categories.service";
 import {CategoryComponent} from "../category/category.component";
 

@@ -1,0 +1,8 @@
+<div>
+    <ol class="products">
+        <li class="product" *ngFor="#auction of vm.auctions">
+            <auction [auction]="auction"></auction>
+        </li>
+    </ol>
+    <bid-modal></bid-modal>
+</div>
