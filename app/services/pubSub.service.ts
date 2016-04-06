@@ -1,11 +1,12 @@
-import {Injectable} from 'angular2/core'
-import {Observable} from "rxjs/Observable";
-import {EventEmitter} from "angular2/core";
-import {Subject} from "rxjs/Subject";
+import {Injectable, EventEmitter} from 'angular2/core'
 
 export enum PubsubEvents {
     CategoryChanged,
-    AuctionsLoaded
+    AuctionsLoaded,
+    CategorySelection,
+    AuctionClick,
+    RemoveAuction,
+    AuctionsChanged
 }
 
 export interface IPubSubService {

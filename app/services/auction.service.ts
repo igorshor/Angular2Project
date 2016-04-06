@@ -1,5 +1,6 @@
 import {Injectable} from "angular2/core";
 import {Observable} from "rxjs/Observable";
+import 'rxjs/Rx';
 import {IAuctionData, IProductData, IBidData, IUserData} from "../models/auction.model";
 import {CategoriesService} from "./categories.service";
 
@@ -21,10 +22,7 @@ export class AuctionService implements IAuctionsService {
     }
 
     public getAuctions():Observable<IAuctionData[]> {
-        return Observable.create((observer)=> {
-            observer.onNext(this.auctions);
-            observer.onCompleted();
-        });
+        return (<any>Observable).from(this.auctions).toArray();
     }
 
     public getAuction(id:string):Observable<IAuctionData> {
@@ -65,7 +63,7 @@ export class AuctionService implements IAuctionsService {
             auction.BidCount = 0;
             auction.Category = this.categoryService.categories[product.CategoryId];
             this.auctions.push(auction);
-            
+
             observer.onCompleted();
         });
     }

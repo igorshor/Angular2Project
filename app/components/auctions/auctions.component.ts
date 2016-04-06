@@ -1,41 +1,56 @@
-import {Component} from 'angular2/Core'
+import {Component, OnInit} from "angular2/core";
+import {PubSubService, PubsubEvents, IEventArgs} from "../../services/pubsub.service";
 import {CategoriesService} from "../../services/categories.service";
-import {PubSubService, PubsubEvents} from "../../services/pubsub.service";
+import {AuctionComponent} from "../auction/auction.component";
 import {IAuctionData} from "../../models/auction.model";
 import {AuctionService} from "../../services/auction.service";
-import {AuctionComponent} from "../auction/auction.component";
+import {TimeService} from "../../services/time.service";
 
-export interface IAuctionsViewModel{
+export interface IContentViewModel {
+    category:string;
+}
+
+export interface IAuctionsViewModel {
     auctions:IAuctionData[];
     auctionsToShow:IAuctionData[];
     selectedCategory:number;
 }
 
+
 @Component({
-    selector:'auctions',
-    templateUrl:'app/components/auctions/auctions.component.html',
-    directives:[AuctionComponent]
+    selector: 'auctions',
+    templateUrl: 'app/components/auctions/auctions.component.html',
+    styleUrls: ['app/components/auctions/auctions.component.css'],
+    directives: [AuctionComponent],
+    providers:[TimeService]
 })
 
-export class AuctionsComponent implements IAuctionsViewModel{
+export class AuctionsComponent implements IAuctionsViewModel {
     public vm:IAuctionsViewModel;
 
     public auctions:IAuctionData[];
     public auctionsToShow:IAuctionData[];
     public selectedCategory:number;
-    
+
     constructor(private pubsubService:PubSubService,
                 private auctionService:AuctionService,
-                private categoriesService:CategoriesService){
+                private categoriesService:CategoriesService) {
         this.vm = this;
+        this.loadAuctions();
+
+        var updateInterval = setInterval(()=> this.loadAuctions(), 1000 * 60);
+
+        var listeners:Function[] = [];
+        this.pubsubService.subscribe(PubsubEvents.CategorySelection, (event:IEventArgs)=> this.auctionsFilterByCategory(event.data));
+        this.pubsubService.subscribe(PubsubEvents.AuctionsChanged, ()=> this.loadAuctions());
+        this.pubsubService.subscribe(PubsubEvents.RemoveAuction, (event:IEventArgs)=> this.removeAuction(event.data));
     }
 
     private loadAuctions() {
-        this.auctionService.getAuctions().subscribe((response)=> {
-            this.auctions = response;
-            this.setSelectedCategory();
-            this.pubsubService.publish(PubsubEvents.AuctionsLoaded)
-        });
+        this.auctionService.getAuctions()
+            .subscribe(
+                auctions => this.auctions = auctions,
+                error => console.log('error in getAuctions :< ' + error));
     }
 
     private auctionsFilterByCategory(categoryId:string) {
@@ -69,7 +84,7 @@ export class AuctionsComponent implements IAuctionsViewModel{
     private setSelectedCategory():void {
         //var queryVariables = this.$location.search();
         //this.selectedCategory = (queryVariables["categoryId"] ? parseInt(queryVariables["categoryId"]) : 0);
-        var selectedCategoryId:string = this.selectedCategory.toString();
-        this.pubsubService.publish(PubsubEvents.CategoryChanged, {data:selectedCategoryId});
+        var selectedCategoryId:string = '0';//this.selectedCategory.toString();
+        this.pubsubService.publish(PubsubEvents.CategoryChanged, {data: selectedCategoryId});
     }
 }
