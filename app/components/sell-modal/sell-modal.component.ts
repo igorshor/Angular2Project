@@ -2,7 +2,8 @@ import {Component, ElementRef} from 'angular2/core'
 import {ICategoryData, IProductData} from "../../models/auction.model";
 import {CategoriesService} from "../../services/categories.service";
 import {FORM_DIRECTIVES} from "angular2/common";
-import {IPubSubService, PubsubEvents} from "../../services/pubsub.service";
+import {PubsubEvents, PubSubService} from "../../services/pubsub.service";
+import {AuctionService} from "../../services/auction.service";
 
 interface ISellModalViewModel {
     product:IProductData;
@@ -35,8 +36,8 @@ export class SellModalComponent implements ISellModalViewModel {
     private formElement:JQuery;
 
     constructor(private categoriesService:CategoriesService,
-                private netService:NetService,
-                private pubsubService:IPubSubService,
+                private auctionService:AuctionService,
+                private pubsubService:PubSubService,
                 private elementRef:ElementRef) {
         this.vm = this;
         this.active = true;
@@ -47,7 +48,6 @@ export class SellModalComponent implements ISellModalViewModel {
             this.active = false;
             setTimeout(()=>this.active = true, 0);
         })
-
     }
 
     private initData() {
@@ -94,10 +94,9 @@ export class SellModalComponent implements ISellModalViewModel {
     }
 
     addAndSaveBtn():void {
-        this.pubsubService.publish(PubsubEvents.CategoryChanged);
-        //this.netService.createAuction(this.product).then(()=> {
-        //    this.$rootScope.$emit('onAuctionsChanged')
-        //});
+        this.auctionService.createAuction(this.product).subscribe(()=> {
+            this.pubsubService.publish(PubsubEvents.CategoryChanged);
+        });
     }
 
 }

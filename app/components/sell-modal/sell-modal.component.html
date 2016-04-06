@@ -138,14 +138,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row modal-footer sale-footer">
+                        <button type="submit" class="btn btn-lg btn-base btn-base-small-color"
+                                data-dismiss="modal" aria-label="Close"
+                                (click)="vm.addAndSaveBtn()"
+                                [disabled]="!sellForm.form.valid">
+                            save and Preview
+                        </button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer sale-footer">
-                <button type="submit" class="btn btn-lg btn-base btn-base-small-color"
-                        data-dismiss="modal" aria-label="Close" (click)="vm.addAndSaveBtn()"
-                        [disabled]="!sellForm.form.valid">
-                    save and Preview
-                </button>
             </div>
         </div>
     </div>

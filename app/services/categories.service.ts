@@ -13,7 +13,7 @@ export interface ICategoriesService {
 export class CategoriesService implements ICategoriesService{
     public categoriesNames:string[] = ['Electronics', 'Fashion', 'Home', 'Books', 'Children', 'Misc.'];
     public defaultCategory = 'All Auctions';
-    public categories = [
+    public categories:ICategoryData[] = [
         {Id: 0, Name: this.defaultCategory},
         {Id: 1, Name: this.categoriesNames[0]},
         {Id: 2, Name: this.categoriesNames[1]},

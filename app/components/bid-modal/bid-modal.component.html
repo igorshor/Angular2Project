@@ -1,10 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="saleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bid-info">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+                Place Bid
+            </div>
+            <div class="modal-body">
+                <div class="row bid-notification" [hidden]="!vm.bidWasMade">
+                    <span>Thank you</span>
+                </div>
+                <div class="row" [hidden]="vm.bidWasMade">
+                    <div class="col-sm-5">
+                        <div class="carousel-pictures-container transformed-background"></div>
+                        <pictures-carousel [pictures]="vm.pictures"></pictures-carousel>
+                    </div>
+                    <div class="col-sm-7">
+                        <form class="form" #bidForm="ngForm">
+                            <div class="row bid-title">
+                                {{vm.auction.Title}}
+                            </div>
+                            <div class="row bid-description txt-black">
+                                {{vm.auction.Description}}
+                            </div>
+                            <div class="txt-small">
+                                <div class="row row-standard-margin">
+                                    <img [src]="styles/images/hour_glass.png"/>
+                                    Time Left: <span class="txt-black txt-bold">{{vm.timeLeft}}</span>
+                                </div>
+                                <div class="row row-standard-margin">
+                                    Start auction bidding at: <span class="txt-black txt-bold">{{vm.auction.StartBid | number:2}}</span>
+                                </div>
+                                <div class="row biding-row">
+                                    <div class="col-sm-5">
+                                        <input type="number"
+                                               class="form-control"
+                                               id="bid"
+                                               step="0.01"
+                                               [(ngModel)]="vm.highestBid"
+                                               ngControl="bid"
+                                               required/>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span class="nis-label">NIS</span>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <button type="submit"
+                                                [disabled]="!bidForm.form.valid"
+                                                class="btn btn-base btn-base-small-color"
+                                                (click)="vm.placeBidClick()">
+                                            Place Bid
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="seller-info">
+                                        Seller:
+                                        <a [href]="mailto:{{vm.auction.User.Email}}?Subject=SELL"
+                                           target="_blank">
+                                            {{vm.auction.User.Name}}
+                                            <img [src]="styles/images/email.png"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bid-footer color-block color-{{vm.auction.category}}"></div>
+        </div>
+    </div>
+</div>

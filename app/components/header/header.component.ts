@@ -10,7 +10,6 @@ interface IHeaderViewModel {
     selector: 'header',
     templateUrl: 'app/components/header/header.component.html',
     styleUrls:['app/components/header/header.component.css'],
-    directives:[SellModalComponent]
 })
 
 export class HeaderComponent implements IHeaderViewModel{

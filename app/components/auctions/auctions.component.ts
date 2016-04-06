@@ -2,6 +2,8 @@ import {Component} from 'angular2/Core'
 import {CategoriesService} from "../../services/categories.service";
 import {PubSubService, PubsubEvents} from "../../services/pubsub.service";
 import {IAuctionData} from "../../models/auction.model";
+import {AuctionService} from "../../services/auction.service";
+import {AuctionComponent} from "../auction/auction.component";
 
 export interface IAuctionsViewModel{
     auctions:IAuctionData[];
@@ -11,7 +13,8 @@ export interface IAuctionsViewModel{
 
 @Component({
     selector:'auctions',
-    templateUrl:'app/components/auctions/auctions.component.html'
+    templateUrl:'app/components/auctions/auctions.component.html',
+    directives:[AuctionComponent]
 })
 
 export class AuctionsComponent implements IAuctionsViewModel{
@@ -22,14 +25,14 @@ export class AuctionsComponent implements IAuctionsViewModel{
     public selectedCategory:number;
     
     constructor(private pubsubService:PubSubService,
-                private netService:INetService,
+                private auctionService:AuctionService,
                 private categoriesService:CategoriesService){
         this.vm = this;
     }
 
     private loadAuctions() {
-        this.netService.getAuctions().then((response)=> {
-            this.auctions = response.data;
+        this.auctionService.getAuctions().subscribe((response)=> {
+            this.auctions = response;
             this.setSelectedCategory();
             this.pubsubService.publish(PubsubEvents.AuctionsLoaded)
         });
@@ -42,7 +45,7 @@ export class AuctionsComponent implements IAuctionsViewModel{
             return;
         }
 
-        this.vm.auctionsToShow = this.filter(this.auctions, {Category: {Id: categoryId}});
+        this.vm.auctionsToShow = this.auctions.filter((auction:IAuctionData)=> auction.Category.Id === id);
     }
 
     private removeAuction(auctionId:string):void {
@@ -65,7 +68,7 @@ export class AuctionsComponent implements IAuctionsViewModel{
 
     private setSelectedCategory():void {
         //var queryVariables = this.$location.search();
-        this.selectedCategory = (queryVariables["categoryId"] ? parseInt(queryVariables["categoryId"]) : 0);
+        //this.selectedCategory = (queryVariables["categoryId"] ? parseInt(queryVariables["categoryId"]) : 0);
         var selectedCategoryId:string = this.selectedCategory.toString();
         this.pubsubService.publish(PubsubEvents.CategoryChanged, {data:selectedCategoryId});
     }

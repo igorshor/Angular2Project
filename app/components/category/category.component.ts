@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from 'angular2/core'
-import {PubSubService} from "../../services/pubsub.service";
+import {PubSubService, IEventArgs} from "../../services/pubsub.service";
 import {PubsubEvents} from "../../services/pubsub.service";
 
 
@@ -29,7 +29,7 @@ export class CategoryComponent implements ICategoryViewModel, OnInit {
 
     constructor(private pubsubService:PubSubService) {
         this.vm = this;
-        pubsubService.subscribe(PubsubEvents.CategoryChanged,(args)=> {
+        pubsubService.subscribe(PubsubEvents.CategoryChanged,(args:IEventArgs)=> {
             this.categorySelected = args.data === this.categoryId;
         });
     }
