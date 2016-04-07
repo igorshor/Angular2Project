@@ -4,6 +4,7 @@ import {AuctionService} from "../../services/auction.service";
 import {TimeService} from "../../services/time.service";
 import {PubsubEvents, IEventArgs, PubSubService} from "../../services/pubsub.service";
 import {NumberLimitPipe} from "../pipes/number-limit.pipe";
+import {PicturesCarouselController, PicturesCarouselComponent} from "../pictures-carousel/pictures-carousel.component";
 
 export interface IBidModalViewModel {
     auction:IAuctionData;
@@ -20,6 +21,7 @@ export interface IBidModalViewModel {
     selector: 'bid-modal',
     templateUrl: 'app/components/bid-modal/bid-modal.component.html',
     styleUrls: ['app/components/bid-modal/bid-modal.component.css'],
+    directives:[PicturesCarouselComponent],
     pipes: [NumberLimitPipe],
 })
 export class BidModalComponent implements IBidModalViewModel, OnInit {
