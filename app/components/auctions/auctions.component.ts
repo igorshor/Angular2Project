@@ -5,6 +5,7 @@ import {AuctionComponent} from "../auction/auction.component";
 import {IAuctionData} from "../../models/auction.model";
 import {AuctionService} from "../../services/auction.service";
 import {TimeService} from "../../services/time.service";
+import {BidModalComponent} from "../bid-modal/bid-modal.component";
 
 export interface IContentViewModel {
     category:string;
@@ -21,8 +22,8 @@ export interface IAuctionsViewModel {
     selector: 'auctions',
     templateUrl: 'app/components/auctions/auctions.component.html',
     styleUrls: ['app/components/auctions/auctions.component.css'],
-    directives: [AuctionComponent],
-    providers:[TimeService]
+    directives: [AuctionComponent, BidModalComponent],
+    providers: [TimeService]
 })
 
 export class AuctionsComponent implements IAuctionsViewModel {
@@ -50,7 +51,8 @@ export class AuctionsComponent implements IAuctionsViewModel {
         this.auctionService.getAuctions()
             .subscribe(
                 auctions => this.auctions = auctions,
-                error => console.log('error in getAuctions :< ' + error));
+                error => console.log('error in getAuctions :< ' + error),
+                ()=> this.setSelectedCategory());
     }
 
     private auctionsFilterByCategory(categoryId:string) {

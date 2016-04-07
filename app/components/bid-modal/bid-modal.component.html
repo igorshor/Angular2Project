@@ -28,11 +28,11 @@
                             </div>
                             <div class="txt-small">
                                 <div class="row row-standard-margin">
-                                    <img [src]="styles/images/hour_glass.png"/>
+                                    <img src="styles/images/hour_glass.png"/>
                                     Time Left: <span class="txt-black txt-bold">{{vm.timeLeft}}</span>
                                 </div>
                                 <div class="row row-standard-margin">
-                                    Start auction bidding at: <span class="txt-black txt-bold">{{vm.auction.StartBid | number:2}}</span>
+                                    Start auction bidding at: <span class="txt-black txt-bold">{{vm.auction.StartBid | numberLimit:2}}</span>
                                 </div>
                                 <div class="row biding-row">
                                     <div class="col-sm-5">
@@ -59,10 +59,10 @@
                                 <div class="row">
                                     <div class="seller-info">
                                         Seller:
-                                        <a [href]="mailto:{{vm.auction.User.Email}}?Subject=SELL"
+                                        <a [href]="vm.mailTo"
                                            target="_blank">
                                             {{vm.auction.User.Name}}
-                                            <img [src]="styles/images/email.png"/>
+                                            <img src="styles/images/email.png"/>
                                         </a>
                                     </div>
                                 </div>

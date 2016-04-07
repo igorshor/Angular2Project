@@ -6,6 +6,7 @@ import {UserService} from "../../services/user.service";
 import {TimeService} from "../../services/time.service";
 import {NumberPipe} from "angular2/common";
 import {NumberLimitPipe} from "../pipes/number-limit.pipe";
+import {BidModalComponent} from "../bid-modal/bid-modal.component";
 
 export interface IAuctionViewModel {
     auction:IAuctionData;
@@ -21,13 +22,10 @@ export interface IAuctionViewModel {
 @Component({
     selector: 'auction',
     templateUrl: 'app/components/auction/auction.component.html',
-    pipes:[NumberLimitPipe]
+    pipes:[NumberLimitPipe],
 })
 
 export class AuctionComponent implements IAuctionViewModel,OnInit {
-    ngOnInit():any {
-        this.initAuction();
-    }
     public vm:IAuctionViewModel;
     @Input() public auction:IAuctionData;
     public highestBid:number;
@@ -50,6 +48,10 @@ export class AuctionComponent implements IAuctionViewModel,OnInit {
         this.vm.isUserAuction = this.auction.User.Name === this.userService.userName;
         this.vm.category = this.auction.Category.Name.toLowerCase().replace(' ', '-').replace('.', '');
         this.vm.mailTo = "mailto:" + this.vm.auction.User.Email + "?Subject=SELL";
+    }
+
+    public ngOnInit():void {
+        this.initAuction();
     }
 
     public openBidModal():void {
