@@ -60,6 +60,10 @@ export class AuctionComponent implements IAuctionViewModel,OnInit {
 
     public deleteAuctionBtn():void {
         this.auctionService.deleteAuction(this.auction.Id)
-            .subscribe(()=> this.pubsubService.publish(PubsubEvents.RemoveAuction, {data: this.auction.Id}));
+            .subscribe(()=> {
+                this.pubsubService.publish(PubsubEvents.RemoveAuction, {data: this.auction.Id})
+            },()=>{},()=>{
+                this.pubsubService.publish(PubsubEvents.RemoveAuction, {data: this.auction.Id})
+            });
     }
 }

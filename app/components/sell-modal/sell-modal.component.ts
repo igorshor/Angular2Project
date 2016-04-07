@@ -33,8 +33,6 @@ export class SellModalComponent implements ISellModalViewModel {
     public title:string;
     public active:boolean;
 
-    private formElement:JQuery;
-
     constructor(private categoriesService:CategoriesService,
                 private auctionService:AuctionService,
                 private pubsubService:PubSubService,
@@ -42,9 +40,8 @@ export class SellModalComponent implements ISellModalViewModel {
         this.vm = this;
         this.active = true;
         this.initData();
-        this.formElement = $(elementRef);
 
-        this.formElement.on('show.bs.modal', ()=> {
+        $(elementRef).on('show.bs.modal', ()=> {
             this.active = false;
             setTimeout(()=>this.active = true, 0);
         })

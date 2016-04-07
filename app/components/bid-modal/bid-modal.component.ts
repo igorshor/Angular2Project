@@ -4,7 +4,7 @@ import {AuctionService} from "../../services/auction.service";
 import {TimeService} from "../../services/time.service";
 import {PubsubEvents, IEventArgs, PubSubService} from "../../services/pubsub.service";
 import {NumberLimitPipe} from "../pipes/number-limit.pipe";
-import {PicturesCarouselController, PicturesCarouselComponent} from "../pictures-carousel/pictures-carousel.component";
+import {PicturesCarouselComponent} from "../pictures-carousel/pictures-carousel.component";
 
 export interface IBidModalViewModel {
     auction:IAuctionData;
@@ -21,7 +21,7 @@ export interface IBidModalViewModel {
     selector: 'bid-modal',
     templateUrl: 'app/components/bid-modal/bid-modal.component.html',
     styleUrls: ['app/components/bid-modal/bid-modal.component.css'],
-    directives:[PicturesCarouselComponent],
+    directives: [PicturesCarouselComponent],
     pipes: [NumberLimitPipe],
 })
 export class BidModalComponent implements IBidModalViewModel, OnInit {
@@ -33,8 +33,6 @@ export class BidModalComponent implements IBidModalViewModel, OnInit {
     public timeLeft:string;
     public bidWasMade:boolean;
     public mailTo:string;
-
-    private formElement:JQuery;
 
     constructor(private pubsubService:PubSubService,
                 private auctionService:AuctionService,
@@ -49,15 +47,19 @@ export class BidModalComponent implements IBidModalViewModel, OnInit {
         });
 
         this.pubsubService.subscribe(PubsubEvents.AuctionClick, (args:IEventArgs)=> {
-            this.auctionService.getAuction(args.data).toArray().subscribe(
-                (auction)=> this.auction = auction[0],
-                error => console.log('error in getAuction :< ' + error),
-                ()=> this.initBidModal())
-
+            this.auctionService.getAuction(args.data).subscribe(
+                (auction:IAuctionData)=> {
+                    this.auction = auction
+                },
+                error => {
+                    console.log('error in getAuction :< ' + error)
+                },
+                ()=> {
+                    this.initBidModal()
+                })
         });
 
-        this.formElement = $(elementRef);
-        this.formElement.on('hidden.bs.modal', ()=> this.resetForum());
+        $(elementRef).on('hidden.bs.modal', ()=> this.resetForum());
     }
 
     public ngOnInit():any {

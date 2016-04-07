@@ -48,11 +48,20 @@ export class AuctionsComponent implements IAuctionsViewModel {
     }
 
     private loadAuctions() {
+        this.auctions = [];
+        this.selectedCategory = 0;
         this.auctionService.getAuctions()
             .subscribe(
-                auctions => this.auctions = auctions,
-                error => console.log('error in getAuctions :< ' + error),
-                ()=> this.setSelectedCategory());
+                (auction:IAuctionData) => {
+                    if (this.selectedCategory) {
+                        if (this.selectedCategory.toString() === auction.Id)
+                            this.auctions.push(auction)
+                    }
+                    else {
+                        this.auctions.push(auction)
+                    }
+                },
+                error => console.log('error in getAuctions :< ' + error));
     }
 
     private auctionsFilterByCategory(categoryId:string) {

@@ -5,7 +5,7 @@ import {IAuctionData, IProductData, IBidData, IUserData} from "../models/auction
 import {CategoriesService} from "./categories.service";
 
 export interface IAuctionsService {
-    getAuctions():Observable<IAuctionData[]>;
+    getAuctions():Observable<IAuctionData>;
     getAuction(id:string):Observable<IAuctionData>;
     deleteAuction(id:string):Observable<void>;
     createAuction(product:IProductData):Observable<void>;
@@ -21,29 +21,21 @@ export class AuctionService implements IAuctionsService {
         this.createFakeAuctions();
     }
 
-    public getAuctions():Observable<IAuctionData[]> {
-        return (<any>Observable).from(this.auctions).toArray();
+    public getAuctions():Observable<IAuctionData> {
+        return (<any>Observable).from(this.auctions);
     }
 
     public getAuction(id:string):Observable<IAuctionData> {
-        return Observable.create((observer)=> {
-            var auction:IAuctionData = this.auctions.find((auction:IAuctionData)=> auction.Id === id);
-            if (auction) {
-                observer.onNext(auction);
-                observer.onCompleted();
-            }
-            else {
-                observer.onError()
-            }
-        });
+        return (<any>Observable).from(this.auctions).filter((auction:IAuctionData)=> auction.Id === id).take(1);
     }
 
     public deleteAuction(id:string):Observable<void> {
         return Observable.create((observer)=> {
             var auction:IAuctionData = this.auctions.find((auction:IAuctionData)=> auction.Id === id);
-            var index:number = this.auctions.indexOf(auction[0]);
+            var index:number = this.auctions.indexOf(auction);
             if (index >= 0) {
                 this.auctions.splice(index, 1);
+                observer.onNext(42);
                 observer.onCompleted();
             }
             else {
@@ -94,10 +86,10 @@ export class AuctionService implements IAuctionsService {
             StartTime: moment().toDate(),
             EndTime: moment().toDate(),
             StartBid: 1,
-            Picture1: '',
-            Picture2: '',
-            Picture3: '',
-            Picture4: '',
+            Picture1: 'http://placehold.it/120x120&text=image1',
+            Picture2: 'http://placehold.it/120x120&text=image2',
+            Picture3: 'http://placehold.it/120x120&text=image3',
+            Picture4: 'http://placehold.it/120x120&text=image4',
             Id: '1',
             IsItemNew: false,
             User: {
@@ -119,11 +111,11 @@ export class AuctionService implements IAuctionsService {
             StartTime: moment().toDate(),
             EndTime: moment().toDate(),
             StartBid: 1,
-            Picture1: '',
-            Picture2: '',
-            Picture3: '',
-            Picture4: '',
-            Id: '1',
+            Picture1: 'http://placehold.it/120x120&text=image1',
+            Picture2: 'http://placehold.it/120x120&text=image2',
+            Picture3: 'http://placehold.it/120x120&text=image3',
+            Picture4: 'http://placehold.it/120x120&text=image4',
+            Id: '2',
             IsItemNew: false,
             User: {
                 Id: 1,
