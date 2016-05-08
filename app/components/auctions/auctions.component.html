@@ -1,6 +1,6 @@
 <div>
     <ol class="products">
-        <li class="product" *ngFor="#auction of vm.auctions">
+        <li class="product" *ngFor="let auction of vm.auctions; trackBy:Id">
             <auction [auction]="auction"></auction>
         </li>
     </ol>
