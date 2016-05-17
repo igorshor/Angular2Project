@@ -6,7 +6,9 @@ export enum PubsubEvents {
     CategorySelection,
     AuctionClick,
     RemoveAuction,
-    AuctionsChanged
+    AuctionsChanged,
+    LocationChanged,
+    LocationPopped,
 }
 
 export interface IPubSubService {
